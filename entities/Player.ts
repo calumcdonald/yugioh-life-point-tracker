@@ -1,5 +1,5 @@
 export interface IPlayer {
-    id?: number;
-    name?: string;
-    lifePoints?: number;
+    id: number;
+    name: string;
+    lifePoints: number;
 }

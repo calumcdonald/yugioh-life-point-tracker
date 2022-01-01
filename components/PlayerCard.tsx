@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { IPlayer } from "../entities/Player";
 import { Text, View } from '../components/Themed';
 import { SafeAreaView, TextInput, StyleSheet, Button } from "react-native";
-import Checkbox from 'expo-checkbox';
 
 const PlayerCard = (props: {player: IPlayer, isSelected: boolean}) => {
     const [name, setName] = useState(props.player.name);
@@ -12,7 +11,7 @@ const PlayerCard = (props: {player: IPlayer, isSelected: boolean}) => {
             <Text style={styles.name}>
                 {props.player.name}
             </Text>
-            <Text style={styles.lifePoints}>
+            <Text style={[styles.lifePoints, props.player.lifePoints <= 0 ? styles.dead : styles.alive]}>
                 {props.player.lifePoints}
             </Text>
         </View>
@@ -22,6 +21,7 @@ const PlayerCard = (props: {player: IPlayer, isSelected: boolean}) => {
 const styles = StyleSheet.create({
     card:{
         flex: 1,
+        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         padding: 15,
@@ -34,10 +34,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#aaaaaa',
     },
     name:{
-        fontSize: 35,
+        fontSize: 45,
     },
     lifePoints:{
-        fontSize: 25,
+        marginLeft: 'auto',
+        fontSize: 35,
+    },
+    alive:{
+        color:'black',
+    },
+    dead:{
+        color: 'red',
     }
 });
 

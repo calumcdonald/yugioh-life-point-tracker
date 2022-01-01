@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-
 import PlayerCard from '../components/PlayerCard';
+import EnterNameDialog from '../components/EnterNameDialog';
 import { IPlayer } from '../entities/Player';
 import { RootTabScreenProps } from '../types';
 import { Text, View } from '../components/Themed';
@@ -22,14 +22,19 @@ const initialPlayers = [{
 const LifePointTracker = ({ navigation }: RootTabScreenProps<'LifePointTracker'>) => {
   const [players, setPlayers] = useState<IPlayer[]>([]);
   const [selected, setSelected] = useState<IPlayer | null>(null);
+  const [isNameDialogOpen, setIsNameDialogOpen] = useState<boolean>(false);
 
-  const createPlayer = () => {
+  const addPlayer = () => {
+
+  }
+
+  const createPlayer = (name: string) => {
     let newId = 0;
     if(players.length !== 0){
       newId = players[players.length-1].id + 1;
     }
     
-    setPlayers([...players, {id:newId,name:`Player ${newId+1}`,lifePoints:8000}]);
+    setPlayers([...players, {id:newId,name:name,lifePoints:8000}]);
   };
 
   const removePlayer = () => {
@@ -61,9 +66,11 @@ const LifePointTracker = ({ navigation }: RootTabScreenProps<'LifePointTracker'>
       </View>))}
       
       <View style={styles.addRemovePlayerButtonsContainer}>
-        <Ionicons name="add-outline" size={50} style={styles.addRemovePlayerButton} onPress={createPlayer}/>
+        <Ionicons name="add-outline" size={50} style={styles.addRemovePlayerButton} onPress={addPlayer}/>
         <AntDesign name="minus" size={50} style={styles.addRemovePlayerButton} onPress={removePlayer} />
       </View>
+
+      <EnterNameDialog />
     </View>
   );
 }

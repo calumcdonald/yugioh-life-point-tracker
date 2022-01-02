@@ -4,5 +4,6 @@
     "strict": true,
     "module": "esnext",
     "jsx": "react",
+    "noImplicitAny": false,
   }
 }

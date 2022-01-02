@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: 15,
-        borderRadius: 10,
+        borderRadius: 25,
     },
     notSelected:{
         backgroundColor: '#ffffff',
     },
     selected:{
-        backgroundColor: '#aaaaaa',
+        backgroundColor: '#edecea',
     },
     name:{
         fontSize: 45,

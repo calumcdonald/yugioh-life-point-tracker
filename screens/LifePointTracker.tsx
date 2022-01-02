@@ -47,30 +47,37 @@ const LifePointTracker = ({ navigation }: RootTabScreenProps<'LifePointTracker'>
       <ScrollView>
         {players.map(player => {
           return (
-          <TouchableOpacity onPress={() => {
+          <TouchableOpacity key={player.id} onPress={() => {
             setSelected(player);
             }}>
             <PlayerCard player={player} isSelected={selected === player ? true : false} />
           </TouchableOpacity>
           )
         })}
+        <TouchableOpacity style={styles.addPlayerButton} onPress={() => {
+            createPlayer('Matthew');
+            }}>
+              <Ionicons name="add-outline" size={50}/>
+        </TouchableOpacity>
       </ScrollView>
       ) : (
-      <View>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.addPlayerButton} onPress={() => {
+            createPlayer('Matthew');
+            }}>
+              <Ionicons name="add-outline" size={50}/>
+        </TouchableOpacity>
         <Text style={styles.info}>
-            No players yet!
-        </Text>
-        <Text style={styles.info}>
-            Add and remove players with the buttons below.
+            Add players with the above button.
         </Text>
       </View>))}
       
+      {/*
       <View style={styles.addRemovePlayerButtonsContainer}>
         <Ionicons name="add-outline" size={50} style={styles.addRemovePlayerButton} onPress={addPlayer}/>
         <AntDesign name="minus" size={50} style={styles.addRemovePlayerButton} onPress={removePlayer} />
       </View>
-
-      <EnterNameDialog />
+      */}
     </View>
   );
 }
@@ -83,6 +90,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   info: {
+    textAlign:'center',
     color: '#aaaaaa',
     fontSize: 20,
   },
@@ -97,6 +105,10 @@ const styles = StyleSheet.create({
     color: "black",
     borderColor: 'lightgrey',
     borderRadius: 20,
+  },
+  addPlayerButton:{
+    marginLeft: 'auto',
+    marginRight: 'auto',
   }
 });
 

@@ -68,7 +68,7 @@ function BottomTabNavigator() {
         name="LifePointTracker"
         component={LifePointTracker}
         options={({ navigation }: RootTabScreenProps<'LifePointTracker'>) => ({
-          title: 'Life Point Tracker',
+          title: 'Life Points',
           tabBarIcon: ({ color }) => <Ionicons name="stats-chart" size={24} color={color} />,
         })}
       />

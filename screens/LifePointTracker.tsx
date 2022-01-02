@@ -1,33 +1,36 @@
 import React, { useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import PlayerCard from '../components/PlayerCard';
-import EnterNameDialog from '../components/EnterNameDialog';
+import NewPlayerDialog from '../components/NewPlayerDialog';
 import { IPlayer } from '../entities/Player';
 import { RootTabScreenProps } from '../types';
 import { Text, View } from '../components/Themed';
 import { Ionicons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
 import Swipeable from 'react-native-swipeable';
 
 const initialPlayers = [{
     id: 0,
-    name: 'Player 1',
+    name: 'Calum',
     lifePoints: 8000
   }, 
   {
     id: 1,
-    name: 'Player 2',
+    name: 'Matthew',
     lifePoints: 8000
 }];
 
 const LifePointTracker = ({ navigation }: RootTabScreenProps<'LifePointTracker'>) => {
   const [players, setPlayers] = useState<IPlayer[]>(initialPlayers);
   const [selected, setSelected] = useState<IPlayer | null>(null);
-  const [isNameDialogOpen, setIsNameDialogOpen] = useState<boolean>(false);
+  const [isNewPlayerDialogOpen, setIsNewPlayerDialogOpen] = useState<boolean>(false);
 
-  const addPlayer = () => {
+  const openNewPlayerDialog = () => {
+    setIsNewPlayerDialogOpen(true);
+  };
 
-  }
+  const closeNewPlayerDialog = () => {
+    setIsNewPlayerDialogOpen(false);
+  };
 
   const createPlayer = (name: string) => {
     let newId = 0;
@@ -35,7 +38,7 @@ const LifePointTracker = ({ navigation }: RootTabScreenProps<'LifePointTracker'>
       newId = players[players.length-1].id + 1;
     }
     
-    setPlayers([...players, {id:newId,name:`Player ${newId}`,lifePoints:8000}]);
+    setPlayers([...players, {id:newId,name:name,lifePoints:8000}]);
   };
 
   const removePlayer = (id: number) => {
@@ -49,31 +52,27 @@ const LifePointTracker = ({ navigation }: RootTabScreenProps<'LifePointTracker'>
         {players.map(player => {
           return (
             <Swipeable style={styles.swipeable} rightContent={<Text style={styles.removePlayerButton}>Remove</Text>} onRightActionRelease={() => removePlayer(player.id)}>
-              <TouchableOpacity key={player.id} onPress={() => {
-                setSelected(player);
-                }}>
+              <TouchableOpacity key={player.id} onPress={() => setSelected(player)}>
                 <PlayerCard player={player} isSelected={selected === player ? true : false} />
               </TouchableOpacity>
             </Swipeable>
           )
         })}
-        <TouchableOpacity style={styles.addPlayerButton} onPress={() => {
-            createPlayer('Matthew');
-            }}>
-              <Ionicons name="add-outline" size={50}/>
+        <TouchableOpacity style={styles.addPlayerButton} onPress={openNewPlayerDialog}>
+          <Ionicons name="add-outline" size={50}/>
         </TouchableOpacity>
       </ScrollView>
       ) : (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.addPlayerButton} onPress={() => {
-            createPlayer('Matthew');
-            }}>
+        <TouchableOpacity style={styles.addPlayerButton} onPress={openNewPlayerDialog}>
               <Ionicons name="add-outline" size={50}/>
         </TouchableOpacity>
         <Text style={styles.info}>
             Add players with the above button.
         </Text>
       </View>))}
+
+      <NewPlayerDialog open={isNewPlayerDialogOpen} handleClose={closeNewPlayerDialog} createPlayer={createPlayer} lastId={players.length}/>
     </View>
   );
 }

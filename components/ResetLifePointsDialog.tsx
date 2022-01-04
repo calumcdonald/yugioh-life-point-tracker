@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { TextInput, StyleSheet } from "react-native";
-import { Button, Dialog, Portal, Provider } from "react-native-paper";
-import { Text, View } from '../components/Themed';
+import { Button, Dialog } from "react-native-paper";
+import { Text } from '../components/Themed';
+import { IPlayer } from "../entities/Player";
 
-const NewPlayerDialog = (props: {open: boolean, handleClose: Function, createPlayer: Function, lastId: number}) => {
-    const [inputVal, setInputVal] = useState(`Player ${props.lastId+1}`);
-
-    useEffect(() => {
-        setInputVal(`Player ${props.lastId+1}`);
-    }, [props.open]);
+const NewPlayerDialog = (props: {open: boolean, handleClose: Function, resetLifePoints: Function}) => {
 
     return (
         <Dialog
@@ -17,22 +13,15 @@ const NewPlayerDialog = (props: {open: boolean, handleClose: Function, createPla
             dismissable
             onDismiss={() => props.handleClose()}>
             <Dialog.Content style={styles.container}>
-                <Text style={styles.title}>New Player</Text>
-                <TextInput
-                    maxLength={10}
-                    style={styles.input}
-                    autoFocus
-                    value={inputVal}
-                    onChangeText={text => setInputVal(text)}
-                />
+                <Text style={styles.title}>Reset Life Points?</Text>
             </Dialog.Content>
 
             <Dialog.Actions>
-                <Button onPress={() => props.handleClose()}>Cancel</Button>
                 <Button onPress={() => {
-                    props.createPlayer(inputVal);
+                    props.resetLifePoints();
                     props.handleClose();
-                }}>Done</Button>
+                }}>Yes</Button>
+                <Button onPress={() => props.handleClose()}>No</Button>
             </Dialog.Actions>
         </Dialog>
     );

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { TextInput, StyleSheet } from "react-native";
-import { Button, Dialog, Portal, Provider } from "react-native-paper";
-import { Text, View } from '../components/Themed';
+import { Button, Dialog } from "react-native-paper";
+import { Text } from '../components/Themed';
+import { IPlayer } from "../entities/Player";
 
-const NewPlayerDialog = (props: {open: boolean, handleClose: Function, createPlayer: Function, lastId: number}) => {
-    const [inputVal, setInputVal] = useState(`Player ${props.lastId+1}`);
+const NewPlayerDialog = (props: {open: boolean, handleClose: Function, addLifePoints: Function, removeLifePoints: Function, player: IPlayer}) => {
+    const [inputVal, setInputVal] = useState('');
 
     useEffect(() => {
-        setInputVal(`Player ${props.lastId+1}`);
+        setInputVal('');
     }, [props.open]);
 
     return (
@@ -17,7 +18,7 @@ const NewPlayerDialog = (props: {open: boolean, handleClose: Function, createPla
             dismissable
             onDismiss={() => props.handleClose()}>
             <Dialog.Content style={styles.container}>
-                <Text style={styles.title}>New Player</Text>
+                <Text style={styles.title}>Enter Amount</Text>
                 <TextInput
                     maxLength={10}
                     style={styles.input}
@@ -30,9 +31,13 @@ const NewPlayerDialog = (props: {open: boolean, handleClose: Function, createPla
             <Dialog.Actions>
                 <Button onPress={() => props.handleClose()}>Cancel</Button>
                 <Button onPress={() => {
-                    props.createPlayer(inputVal);
+                    props.addLifePoints(Number(inputVal));
                     props.handleClose();
-                }}>Done</Button>
+                }}>Add</Button>
+                <Button onPress={() => {
+                    props.removeLifePoints(Number(inputVal));
+                    props.handleClose();
+                }}>Remove</Button>
             </Dialog.Actions>
         </Dialog>
     );

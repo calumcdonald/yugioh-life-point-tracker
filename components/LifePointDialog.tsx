@@ -23,6 +23,7 @@ const NewPlayerDialog = (props: {open: boolean, handleClose: Function, addLifePo
                     maxLength={10}
                     style={styles.input}
                     autoFocus
+                    keyboardType='numeric'
                     value={inputVal}
                     onChangeText={text => setInputVal(text)}
                 />
